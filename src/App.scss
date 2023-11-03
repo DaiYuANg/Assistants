@@ -1,0 +1,15 @@
+@layer {
+  @tailwind base;
+  @tailwind utilities;
+  @tailwind components;
+}
+
+body {
+  border-radius: 10px;
+  position: fixed;
+  width: 100vw;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+}
