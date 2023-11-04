@@ -2,6 +2,7 @@ import { AppShell } from '@mantine/core';
 import { Navbar } from './Navbar.tsx';
 import { Content } from './Content.tsx';
 import { WorkspaceTab } from './WorkspaceTab.tsx';
+import { SearchInContent } from './SearchInContent.tsx';
 
 const Layout = () => {
   // const [opened, { toggle }] = useDisclosure();
@@ -15,6 +16,7 @@ const Layout = () => {
           <Navbar />
         </AppShell.Navbar>
         <AppShell.Main>
+          <SearchInContent />
           <WorkspaceTab />
           <Content />
         </AppShell.Main>

@@ -2,20 +2,27 @@ import { Box, Menu, rem, Text } from '@mantine/core';
 import {
   IconArrowsLeftRight,
   IconCopy,
-  IconMessageCircle,
+  IconEdit,
   IconPhoto,
   IconSearch,
   IconTrash,
 } from '@tabler/icons-react';
 import { MessageProp } from './MessageProp.ts';
 import { useCallback } from 'react';
+import { CodeModal } from './CodeModal.tsx';
+import { useDisclosure } from '@mantine/hooks';
 
 const Message = ({ content, key }: MessageProp) => {
+  const [opened, { open, close }] = useDisclosure(false);
   const copyToClipboard = useCallback(async () => {
     navigator.clipboard.writeText(content).then(() => {
       console.log('copied success');
     });
   }, []);
+
+  const openCodeEditModal = () => {
+    open();
+  };
 
   return (
     <>
@@ -29,8 +36,7 @@ const Message = ({ content, key }: MessageProp) => {
             className={[
               'block',
               'w-full',
-              'bg-sky-200',
-              'text-black',
+              'text-white',
               'hover:bg-sky-700',
               'p-1',
               'rounded',
@@ -52,11 +58,12 @@ const Message = ({ content, key }: MessageProp) => {
             Copy
           </Menu.Item>
           <Menu.Item
+            onClick={openCodeEditModal}
             leftSection={
-              <IconMessageCircle style={{ width: rem(14), height: rem(14) }} />
+              <IconEdit style={{ width: rem(14), height: rem(14) }} />
             }
           >
-            Messages
+            Edit
           </Menu.Item>
           <Menu.Item
             leftSection={
@@ -100,6 +107,8 @@ const Message = ({ content, key }: MessageProp) => {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
+
+      <CodeModal opened={opened} close={close} />
     </>
   );
 };

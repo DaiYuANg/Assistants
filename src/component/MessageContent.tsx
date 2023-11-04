@@ -1,33 +1,59 @@
-import MonacoEditor from 'react-monaco-editor/lib/editor';
+import {
+  Affix,
+  Button,
+  Container,
+  Divider,
+  rem,
+  ScrollArea,
+  Transition,
+} from '@mantine/core';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { IconArrowUp } from '@tabler/icons-react';
+import { useWindowScroll } from '@mantine/hooks';
+import { useRef } from 'react';
+import { Message } from './Message.tsx';
 
 const message = Array.from({ length: 100 }, (_, index) => index++);
 
 const MessageContent = () => {
-  // const items = message.map((item) => (
-  //   <>
-  //     <Message content={item.toString()} key={item + 1} />
-  //     <Divider key={item + 2} />
-  //   </>
-  // ));
-  const onChange = () => {};
-  const options = {
-    selectOnLineNumbers: true,
-  };
+  const containerRef = useRef<HTMLDivElement | null | undefined>();
+  const rowVirtualizer = useVirtualizer({
+    count: 10000,
+    getScrollElement: () => containerRef.current!,
+    estimateSize: () => 35,
+  });
+  console.log(rowVirtualizer);
+  const [scroll, scrollTo] = useWindowScroll();
+  const items = message.map((item) => (
+    <>
+      <Message content={item.toString()} key={item + 1} />
+      <Divider key={item + 2} />
+    </>
+  ));
+
   return (
     <>
-      {/*<ScrollArea.Autosize h={'90vh'}>*/}
-      <MonacoEditor
-        width="800"
-        height="600"
-        language="javascript"
-        theme="vs-dark"
-        options={options}
-        onChange={onChange}
-      />
-      {/*<Container fluid pt={"sm"}>*/}
-      {/*  {items}*/}
-      {/*</Container>*/}
-      {/*</ScrollArea.Autosize>*/}
+      <ScrollArea.Autosize h={'92vh'}>
+        <Container ref={containerRef} fluid pt={'sm'} pb={'sm'}>
+          {items}
+        </Container>
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Transition transition="slide-up" mounted={scroll.y > 0}>
+            {(transitionStyles) => (
+              <Button
+                leftSection={
+                  <IconArrowUp style={{ width: rem(16), height: rem(16) }} />
+                }
+                style={transitionStyles}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Scroll to top
+              </Button>
+            )}
+          </Transition>
+        </Affix>
+      </ScrollArea.Autosize>
+      <Divider />
     </>
   );
 };

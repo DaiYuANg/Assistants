@@ -1,25 +1,31 @@
 import classes from './Content.module.css';
-import { Button, Grid, TextInput } from '@mantine/core';
+import { Button, Center, Grid, TextInput } from '@mantine/core';
 import { IconCode } from '@tabler/icons-react';
+import { useHotkeys } from '@mantine/hooks';
 
 const SendContent = () => {
+  useHotkeys([['enter', () => send()]]);
+  const send = () => {
+    console.log('send');
+  };
   return (
     <>
       <Grid
         className={[
           classes.content,
-          'fixed',
-          'bottom-0',
+          // 'fixed',
+          // 'bottom-0',
           'w-full',
-          'border-b-2 border-amber-100',
         ].join(' ')}
-        p={'sm'}
+        p={'xs'}
       >
-        <Grid.Col span={10}>
+        <Grid.Col span={11}>
           <TextInput rightSection={<IconCode />} />
         </Grid.Col>
-        <Grid.Col span={2}>
-          <Button>send</Button>
+        <Grid.Col span={1}>
+          <Center>
+            <Button>send</Button>
+          </Center>
         </Grid.Col>
       </Grid>
     </>
