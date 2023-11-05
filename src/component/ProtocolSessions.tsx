@@ -2,8 +2,7 @@ import { Accordion } from '@mantine/core';
 import { IconNetwork } from '@tabler/icons-react';
 import { Protocol } from '../type/Protocol.ts';
 
-const protocolSession = Object.values(Protocol).map((value, index, array) => {
-  console.log(value);
+const protocolSession = Object.values(Protocol).map((value) => {
   return {
     value: value,
     icon: <IconNetwork />,

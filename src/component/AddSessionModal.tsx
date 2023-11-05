@@ -16,7 +16,8 @@ import { useCallback, useState } from 'react';
 import { nprogress } from '@mantine/nprogress';
 import { TestProtocol } from '../calls';
 import { notifications } from '@mantine/notifications';
-import { catchError, finalize, from, of, tap } from 'rxjs';
+import { catchError, from, of, tap } from 'rxjs';
+import { debounce } from 'lodash';
 
 type connectionFormType = {
   protocol: Protocol;
@@ -36,48 +37,48 @@ const SessionModal = (props: { opened: boolean; close: () => void }) => {
       // email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
-
   const [buttonText, setButtonText] = useState<string>('Test Connection');
 
-  const testConnection = useCallback(() => {
-    nprogress.start();
-    switch (connectionForm.values.protocol) {
-      case Protocol.TCP_CLIENT:
-        break;
-      case Protocol.TCP_SERVER:
-        break;
-      case Protocol.UDP_CLIENT:
-        break;
-      case Protocol.UDP_SERVER:
-        break;
-    }
-    const connectionFullAddress =
-      connectionForm.values.address + ':' + String(connectionForm.values.port);
-    from(
-      TestProtocol({
-        protocol: connectionForm.values.protocol,
-        addr: connectionFullAddress,
-      }),
-    )
-      .pipe(
-        tap((r) => {
-          console.log(r);
-        }),
-        catchError((e) => {
-          notifications.show({
-            color: 'red',
-            title: 'Connection',
-            message: e,
-          });
-          setButtonText('Save Session');
-          return of(null); // 返回一个包含null值的Observable，以继续执行
-        }),
-        finalize(() => {
-          props.close();
+  const testConnection = useCallback(
+    debounce(() => {
+      nprogress.start();
+      switch (connectionForm.values.protocol) {
+        case Protocol.TCP_CLIENT:
+          break;
+        case Protocol.TCP_SERVER:
+          break;
+        case Protocol.UDP_CLIENT:
+          break;
+        case Protocol.UDP_SERVER:
+          break;
+      }
+      const connectionFullAddress =
+        connectionForm.values.address +
+        ':' +
+        String(connectionForm.values.port);
+      from(
+        TestProtocol({
+          protocol: connectionForm.values.protocol,
+          addr: connectionFullAddress,
         }),
       )
-      .subscribe();
-  }, [connectionForm]);
+        .pipe(
+          tap((r) => {
+            console.log(r);
+          }),
+          catchError((e) => {
+            notifications.show({
+              color: 'red',
+              title: 'Connection',
+              message: e,
+            });
+            return of(null); // 返回一个包含null值的Observable，以继续执行
+          }),
+        )
+        .subscribe();
+    }, 200),
+    [connectionForm],
+  );
   return (
     <>
       <Modal
@@ -90,6 +91,9 @@ const SessionModal = (props: { opened: boolean; close: () => void }) => {
         title="Add Session"
       >
         <form onSubmit={testConnection}>
+          {buttonText === 'Save Session' && (
+            <TextInput label="Session Name" placeholder="Input Session Name" />
+          )}
           <Select
             label="Select Protocol"
             description="Select Connection Protocol"

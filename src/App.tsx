@@ -2,9 +2,13 @@ import '@mantine/core/styles.css';
 import './App.scss';
 import { Layout } from './component';
 import { MouseEvent } from 'react';
+import { useWindowEvent } from '@mantine/hooks';
+import './i18n';
 
 function App() {
-  document.addEventListener('contextmenu', (event) => event.preventDefault());
+  useWindowEvent('contextmenu', (event) => {
+    event.preventDefault();
+  });
   const onContextmenu = (e: MouseEvent<HTMLDivElement>) => {
     return () => {
       e.preventDefault();

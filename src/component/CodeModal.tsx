@@ -1,10 +1,18 @@
 import { ActionIcon, Group, Modal } from '@mantine/core';
-import MonacoEditor from 'react-monaco-editor/lib/editor';
 import { IconX } from '@tabler/icons-react';
-import { useViewportSize } from '@mantine/hooks';
-
+import { useColorScheme, useViewportSize } from '@mantine/hooks';
+import { lazy, useState } from 'react';
+const MonacoEditor = lazy(() =>
+  import('react-monaco-editor/lib/editor').then((module) => ({
+    default: module.default,
+  })),
+);
 const CodeModal = (props: { opened: boolean; close: () => void }) => {
   const { height, width } = useViewportSize();
+  const color = useColorScheme();
+  const [moncaoTheme] = useState<string>(
+    color === 'dark' ? 'vs-dark' : 'vs-light',
+  );
   const options = {
     selectOnLineNumbers: true,
     fontSize: 16,
@@ -39,7 +47,7 @@ const CodeModal = (props: { opened: boolean; close: () => void }) => {
           width={width}
           height={height}
           language="text"
-          theme="vs-dark"
+          theme={moncaoTheme}
           options={options}
           onChange={onChange}
         />

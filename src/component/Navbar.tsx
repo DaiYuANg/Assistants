@@ -1,17 +1,4 @@
-import {
-  ActionIcon,
-  Button,
-  Card,
-  Combobox,
-  Divider,
-  Grid,
-  Group,
-  NumberInput,
-  ScrollAreaAutosize,
-  Select,
-  Stack,
-  TextInput,
-} from '@mantine/core';
+import { Divider, Grid, Group, ScrollAreaAutosize, Stack } from '@mantine/core';
 import { ProtocolSessions } from './ProtocolSessions.tsx';
 import { AddSessionModal } from './AddSessionModal.tsx';
 

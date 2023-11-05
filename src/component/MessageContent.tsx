@@ -12,11 +12,10 @@ import { IconArrowUp } from '@tabler/icons-react';
 import { useWindowScroll } from '@mantine/hooks';
 import { useRef } from 'react';
 import { Message } from './Message.tsx';
-
 const message = Array.from({ length: 100 }, (_, index) => index++);
 
 const MessageContent = () => {
-  const containerRef = useRef<HTMLDivElement | null | undefined>();
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const rowVirtualizer = useVirtualizer({
     count: 10000,
     getScrollElement: () => containerRef.current!,
@@ -34,7 +33,8 @@ const MessageContent = () => {
   return (
     <>
       <ScrollArea.Autosize h={'92vh'}>
-        <Container ref={containerRef} fluid pt={'sm'} pb={'sm'}>
+        <div ref={containerRef}></div>
+        <Container fluid pt={'sm'} pb={'sm'}>
           {items}
         </Container>
         <Affix position={{ bottom: 20, right: 20 }}>
