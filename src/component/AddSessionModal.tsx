@@ -37,7 +37,7 @@ const SessionModal = (props: { opened: boolean; close: () => void }) => {
       // email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
-  const [buttonText, setButtonText] = useState<string>('Test Connection');
+  const [buttonText] = useState<string>('Test Connection');
 
   const testConnection = useCallback(
     debounce(() => {
@@ -82,6 +82,8 @@ const SessionModal = (props: { opened: boolean; close: () => void }) => {
   return (
     <>
       <Modal
+        centered
+        transitionProps={{ transition: 'pop' }}
         opened={props.opened}
         overlayProps={{
           backgroundOpacity: 0.55,
@@ -95,6 +97,8 @@ const SessionModal = (props: { opened: boolean; close: () => void }) => {
             <TextInput label="Session Name" placeholder="Input Session Name" />
           )}
           <Select
+            autoFocus
+            searchable
             label="Select Protocol"
             description="Select Connection Protocol"
             placeholder="Pick value"

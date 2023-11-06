@@ -1,15 +1,11 @@
 pub mod session_manager {
     use std::collections::HashMap;
     use std::sync::Arc;
-    use tokio::sync::{Mutex, RwLock};
-    use crate::support_protocol::SupportProtocol;
+    use di::injectable;
+    use tokio::sync::RwLock;
+    use crate::session::session::Session;
 
-    struct Session<S> {
-        protocol:SupportProtocol,
-        connection:S
-    }
-
-   pub struct SessionManager{
+    pub struct SessionManager{
         // sm_self: Mutex<Option<SessionManager>>,
        sessions: Arc<RwLock<HashMap<String, Session<String>>>>,
     }

@@ -13,7 +13,7 @@ import { ModalsProvider } from '@mantine/modals';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MantineProvider theme={theme} defaultColorScheme={'auto'}>
-      <Notifications position={'top-right'} limit={3} />
+      <Notifications position={'top-right'} limit={3} autoClose={2000} />
       <NavigationProgress />
       <GlobalSpotlight />
       <ModalsProvider>

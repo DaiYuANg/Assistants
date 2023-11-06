@@ -1,10 +1,12 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use di::ServiceCollection;
 use tauri_plugin_log::LogTarget;
 use tauri::Manager;
 use window_shadows::set_shadow;
 use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
+use crate::session::session_manager::session_manager::SessionManager;
 use crate::tcp::tcp_client_connection_manager::tcp_connection_manager::ConnectionManager;
 
 mod support_protocol;
@@ -12,11 +14,20 @@ mod util;
 mod tcp;
 mod udp;
 mod session;
+mod store;
 
 fn main() {
-    builder()
+    tauri_application_builder()
 }
-pub fn builder(){
+
+fn service_provider_builder(){
+    let provider = ServiceCollection::new()
+        // .add(SessionManager::singleton())
+        .build_provider()
+        .unwrap();
+}
+
+pub fn tauri_application_builder(){
     tauri::Builder::default()
         .manage(ConnectionManager::new)
         .setup(|app| {
@@ -46,6 +57,7 @@ pub fn builder(){
         )
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_window_state::Builder::default().build())
+        .plugin(tauri_plugin_sql::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
             tcp::tcp_client_commands::tcp_client_commands::test_connection
         ])

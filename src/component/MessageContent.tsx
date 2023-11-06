@@ -16,12 +16,12 @@ const message = Array.from({ length: 100 }, (_, index) => index++);
 
 const MessageContent = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const rowVirtualizer = useVirtualizer({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  useVirtualizer({
     count: 10000,
     getScrollElement: () => containerRef.current!,
     estimateSize: () => 35,
   });
-  console.log(rowVirtualizer);
   const [scroll, scrollTo] = useWindowScroll();
   const items = message.map((item) => (
     <>
@@ -53,7 +53,6 @@ const MessageContent = () => {
           </Transition>
         </Affix>
       </ScrollArea.Autosize>
-      <Divider />
     </>
   );
 };
