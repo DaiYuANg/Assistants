@@ -1,11 +1,13 @@
-all:build
+all:
 
 build:
-	poetry run nuitka --standalone --output-dir=dist main.py
+	go build -o output/protocolassistant
 
 clean:
-	rm -rf build
-	rm -rf dist
+	rm -rf output
 
-format:
-	poetry run black .
+dev:
+	go run github.com/cosmtrek/air
+
+fmt:
+	go fmt ./...
