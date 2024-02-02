@@ -34,11 +34,12 @@ func onTap() {
 
 type LayoutParam struct {
 	fx.In
-	window  fyne.Window
-	toolbar *widget.Toolbar
+	Window    fyne.Window
+	Toolbar   *widget.Toolbar `name:"toolBar"`
+	StatusBar *fyne.Container `name:"statusBar"`
 }
 
-func NewLayout(window fyne.Window, toolbar *widget.Toolbar) *fyne.Container {
+func NewLayout(param LayoutParam) *fyne.Container {
 	text, _ := boundString.Get()
 	var button = widget.NewButton(text, onTap)
 	boundString.AddListener(binding.NewDataListener(func() {
@@ -49,45 +50,44 @@ func NewLayout(window fyne.Window, toolbar *widget.Toolbar) *fyne.Container {
 	mainLayout :=
 		container.NewBorder(
 			// top
-			toolbar,
+			param.Toolbar,
 			// bottom
-			container.NewHBox(
-				widget.NewLabel("Left 1"),
-				widget.NewLabel("Left 2"),
-				widget.NewProgressBarInfinite(),
-			),
+			param.StatusBar,
 			// left
-			container.NewVBox(
-				widget.NewLabel("ip address"),
-				xwidget.NewCompletionEntry([]string{}),
-				widget.NewSeparator(),
-				widget.NewLabel("protocol"),
-				widget.NewSelect(options, func(selected string) {
-					NewCreateConnectionDialog(window)
-					fmt.Println(selected)
-				}),
-				widget.NewSeparator(),
-				button,
-				widget.NewLabel("Bottom"),
-				&widget.Form{
-					Items: []*widget.FormItem{
-						{Text: "Entry", Widget: widget.NewEntry()}},
-					OnSubmit: func() {
-						log.Println("Form submitted:", widget.NewEntry().Text)
-						log.Println("multiline:", widget.NewMultiLineEntry().Text)
-					},
-				},
-			),
+			nil,
 			// right
 			nil,
 			// center
-			container.NewVBox(
-				container.NewAppTabs(
-					container.NewTabItem("Tab 1", container.NewVBox(
-						widget.NewLabel("Center 1"),
-						NewMessageContent(),
-					)),
-					container.NewTabItem("Tab 2", widget.NewLabel("World!")),
+			container.NewHSplit(
+				container.NewVBox(
+					widget.NewLabel("ip address"),
+					xwidget.NewCompletionEntry([]string{}),
+					widget.NewSeparator(),
+					widget.NewLabel("protocol"),
+					widget.NewSelect(options, func(selected string) {
+						NewCreateConnectionDialog(param.Window)
+						fmt.Println(selected)
+					}),
+					widget.NewSeparator(),
+					button,
+					widget.NewLabel("Bottom"),
+					&widget.Form{
+						Items: []*widget.FormItem{
+							{Text: "Entry", Widget: widget.NewEntry()}},
+						OnSubmit: func() {
+							log.Println("Form submitted:", widget.NewEntry().Text)
+							log.Println("multiline:", widget.NewMultiLineEntry().Text)
+						},
+					},
+				),
+				container.NewVBox(
+					container.NewAppTabs(
+						container.NewTabItem("Tab 1", container.NewVBox(
+							widget.NewLabel("Center 1"),
+							NewMessageContent(),
+						)),
+						container.NewTabItem("Tab 2", widget.NewLabel("World!")),
+					),
 				),
 			),
 		)

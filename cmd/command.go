@@ -8,9 +8,11 @@ import (
 )
 
 var app = fx.New(
-	uiModule,
-	errorModule,
 	fx.Provide(zap.NewExample),
+	databaseModule,
+	contextModule,
+	errorModule,
+	uiModule,
 )
 
 var RootCmd = cobra.Command{Use: "ProtocolAssistant",

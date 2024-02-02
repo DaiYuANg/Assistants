@@ -11,13 +11,24 @@ import (
 var uiModule = fx.Module("ui", fx.Provide(
 	newUIApp,
 	newUIWindow,
-	ui.NewToolBar,
-	ui.NewLayout,
-), fx.Invoke(setupWindow, showUI))
+	fx.Annotate(ui.NewToolBar, fx.ResultTags(`name:"toolBar"`)),
+	fx.Annotate(ui.NewLayout, fx.ResultTags(`name:"layout"`)),
+	fx.Annotate(ui.NewStatusBar, fx.ResultTags(`name:"statusBar"`)),
+), fx.Invoke(setupWindow, showUI, windowShutdownHook))
 
-func newUIApp() (fyne.App, fyne.Preferences) {
-	var app = fyneApp.New()
-	return app, app.Preferences()
+type UIAppResult struct {
+	fx.Out
+	fyne.App
+	fyne.Preferences
+}
+
+func newUIApp() UIAppResult {
+	var app = fyneApp.NewWithID("proto.assistant")
+	app.SendNotification(fyne.NewNotification("start", "ok"))
+	return UIAppResult{
+		App:         app,
+		Preferences: app.Preferences(),
+	}
 }
 
 func newUIWindow(app fyne.App) fyne.Window {
@@ -27,8 +38,14 @@ func newUIWindow(app fyne.App) fyne.Window {
 	return window
 }
 
-func setupWindow(window fyne.Window, content *fyne.Container) {
-	window.SetContent(content)
+type SetupWindowParam struct {
+	fx.In
+	Window  fyne.Window
+	Content *fyne.Container `name:"layout"`
+}
+
+func setupWindow(param SetupWindowParam) {
+	param.Window.SetContent(param.Content)
 }
 
 func showUI(lc fx.Lifecycle, window fyne.Window) {
@@ -39,4 +56,18 @@ func showUI(lc fx.Lifecycle, window fyne.Window) {
 			return nil
 		}},
 	)
+}
+
+type WindowShutdownHookParam struct {
+	fx.In
+	Lx          fx.Lifecycle
+	MainLayout  *fyne.Container `name:"layout"`
+	Preferences fyne.Preferences
+}
+
+func windowShutdownHook(param WindowShutdownHookParam) {
+	param.Lx.Append(fx.Hook{OnStop: func(ctx context.Context) error {
+		println("on shutdown")
+		return nil
+	}})
 }

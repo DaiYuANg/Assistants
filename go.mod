@@ -10,38 +10,31 @@ require (
 	github.com/samber/lo v1.39.0
 	github.com/spf13/cobra v1.8.0
 	go.uber.org/fx v1.20.1
+	gorm.io/driver/sqlite v1.5.4
+	gorm.io/gorm v1.25.6
 )
 
 require (
 	dario.cat/mergo v1.0.0 // indirect
-	github.com/Masterminds/semver/v3 v3.2.1 // indirect
 	github.com/bep/godartsass v0.16.0 // indirect
 	github.com/bep/golibsass v1.1.0 // indirect
 	github.com/cli/safeexec v1.0.0 // indirect
 	github.com/cosmtrek/air v1.49.0 // indirect
 	github.com/creack/pty v1.1.18 // indirect
-	github.com/fatih/color v1.16.0 // indirect
-	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
-	github.com/go-task/task/v3 v3.34.1 // indirect
+	github.com/fatih/color v1.14.1 // indirect
 	github.com/gohugoio/hugo v0.111.3 // indirect
-	github.com/joho/godotenv v1.5.1 // indirect
-	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-zglob v0.0.4 // indirect
-	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
+	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
-	github.com/radovskyb/watcher v1.0.7 // indirect
-	github.com/sajari/fuzzy v1.0.0 // indirect
+	github.com/rogpeppe/go-internal v1.10.1-0.20230524175051-ec119421bb97 // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/tdewolff/parse/v2 v2.6.5 // indirect
-	github.com/zeebo/xxh3 v1.0.2 // indirect
-	golang.org/x/sync v0.6.0 // indirect
-	golang.org/x/term v0.16.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
-	mvdan.cc/sh/v3 v3.7.0 // indirect
 )
 
 require (
@@ -71,7 +64,7 @@ require (
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/dig v1.17.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	go.uber.org/zap v1.26.0 // indirect
+	go.uber.org/zap v1.26.0
 	golang.org/x/exp v0.0.0-20240119083558-1b970713d09a // indirect
 	golang.org/x/image v0.15.0 // indirect
 	golang.org/x/mobile v0.0.0-20240112133503-c713f31d574b // indirect

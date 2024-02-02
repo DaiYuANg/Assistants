@@ -5,6 +5,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
+	"protocol/assistant/internal/component"
 )
 
 func NewCreateConnectionDialog(window fyne.Window) {
@@ -16,20 +17,23 @@ func NewCreateConnectionDialog(window fyne.Window) {
 		Bold:      true,
 		Italic:    false,
 		Monospace: true,
-		Symbol:    false,
+		Symbol:    true,
 		TabWidth:  0,
 	})
 	var sp = widget.NewSeparator()
 	sp.ExtendBaseWidget(label)
 	dl := dialog.NewCustomConfirm(
 		"Create connection",
-		"create",
+		"Save",
 		"cancel",
 		container.NewVBox(
 			label,
 			sp,
 			widget.NewSelect([]string{"TCP", "UDP"}, func(s string) {
 
+			}),
+			component.NewButton("test", func(button *widget.Button) {
+				button.SetText("test change button")
 			}),
 			widget.NewLabel("ip address"),
 			widget.NewSeparator(),
@@ -43,5 +47,6 @@ func NewCreateConnectionDialog(window fyne.Window) {
 			println("test")
 		},
 		window)
+	dl.Resize(fyne.NewSquareSize(400))
 	dl.Show()
 }
