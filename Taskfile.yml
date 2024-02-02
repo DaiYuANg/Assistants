@@ -1,0 +1,25 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+
+  build:
+    cmds:
+      -  fyne package -os windows
+
+  dev:
+    cmd: go run github.com/cosmtrek/air
+
+  fmt:
+    cmd: go fmt ./...
+
+  clean:
+    rm -rf output

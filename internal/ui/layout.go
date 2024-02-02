@@ -6,8 +6,10 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
+	xwidget "fyne.io/x/fyne/widget"
+	"go.uber.org/fx"
 	"log"
-	"protocol/assistant/internal/socket"
+	"protocol/assistant/internal/protocol"
 )
 
 var options = []string{"Option 1", "Option 2", "Option 3"}
@@ -26,11 +28,17 @@ func onTap() {
 		panic(err)
 	}
 	go func() {
-		socket.NewSocketServer()
+		protocol.NewTcpServer()
 	}()
 }
 
-func NewLayout() *fyne.Container {
+type LayoutParam struct {
+	fx.In
+	window  fyne.Window
+	toolbar *widget.Toolbar
+}
+
+func NewLayout(window fyne.Window, toolbar *widget.Toolbar) *fyne.Container {
 	text, _ := boundString.Get()
 	var button = widget.NewButton(text, onTap)
 	boundString.AddListener(binding.NewDataListener(func() {
@@ -38,54 +46,51 @@ func NewLayout() *fyne.Container {
 		var te, _ = boundString.Get()
 		button.SetText(te)
 	}))
-	mainLayout := container.NewBorder(
-		// top
-		container.NewVBox(
-		//widget.NewLabel("Top"),
-		),
-		// bottom
-		container.NewHBox(
-			widget.NewLabel("Left 1"),
-			widget.NewLabel("Left 2"),
-			widget.NewProgressBarInfinite(),
-		),
-		// left
-		container.NewVBox(
-			widget.NewLabel("ip address"),
-			widget.NewEntry(),
-			widget.NewSeparator(),
-			widget.NewLabel("protocol"),
-			widget.NewSelect(options, func(selected string) {
-				fmt.Println(selected)
-			}),
-			widget.NewSeparator(),
-			button,
-			widget.NewLabel("Bottom"),
-			&widget.Form{
-				Items: []*widget.FormItem{
-					{Text: "Entry", Widget: widget.NewEntry()}},
-				OnSubmit: func() {
-					log.Println("Form submitted:", widget.NewEntry().Text)
-					log.Println("multiline:", widget.NewMultiLineEntry().Text)
-				},
-			},
-		),
-		// right
-		container.NewVBox(
-		//widget.NewLabel("Right 1"),
-		//widget.NewLabel("Right 2"),
-		),
-		// center
-		container.NewVBox(
-			container.NewAppTabs(
-				container.NewTabItem("Tab 1", container.NewVBox(
-					widget.NewLabel("Center 1"),
-					NewMessageContent(),
-				)),
-				container.NewTabItem("Tab 2", widget.NewLabel("World!")),
+	mainLayout :=
+		container.NewBorder(
+			// top
+			toolbar,
+			// bottom
+			container.NewHBox(
+				widget.NewLabel("Left 1"),
+				widget.NewLabel("Left 2"),
+				widget.NewProgressBarInfinite(),
 			),
-		),
-	)
+			// left
+			container.NewVBox(
+				widget.NewLabel("ip address"),
+				xwidget.NewCompletionEntry([]string{}),
+				widget.NewSeparator(),
+				widget.NewLabel("protocol"),
+				widget.NewSelect(options, func(selected string) {
+					NewCreateConnectionDialog(window)
+					fmt.Println(selected)
+				}),
+				widget.NewSeparator(),
+				button,
+				widget.NewLabel("Bottom"),
+				&widget.Form{
+					Items: []*widget.FormItem{
+						{Text: "Entry", Widget: widget.NewEntry()}},
+					OnSubmit: func() {
+						log.Println("Form submitted:", widget.NewEntry().Text)
+						log.Println("multiline:", widget.NewMultiLineEntry().Text)
+					},
+				},
+			),
+			// right
+			nil,
+			// center
+			container.NewVBox(
+				container.NewAppTabs(
+					container.NewTabItem("Tab 1", container.NewVBox(
+						widget.NewLabel("Center 1"),
+						NewMessageContent(),
+					)),
+					container.NewTabItem("Tab 2", widget.NewLabel("World!")),
+				),
+			),
+		)
 	return mainLayout
 }
 

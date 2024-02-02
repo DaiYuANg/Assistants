@@ -1,4 +1,4 @@
-package socket
+package protocol
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-func NewSocketServer() {
+func NewTcpServer() {
 	port, err := pkg.FindAvailablePort()
 	if err != nil {
 		return
@@ -44,7 +44,12 @@ func NewSocketServer() {
 
 func handleConnection(conn net.Conn) {
 	// 在连接关闭之前一直处理客户端的请求
-	defer conn.Close()
+	defer func(conn net.Conn) {
+		err := conn.Close()
+		if err != nil {
+
+		}
+	}(conn)
 
 	// 处理客户端的请求
 	// 这里可以编写处理逻辑，例如读取/写入数据
