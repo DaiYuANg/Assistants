@@ -11,7 +11,7 @@ import (
 	"protocol/assistant/internal/model"
 )
 
-var databaseModule = fx.Module("databaseModule", fx.Provide(newDatabaseModule), fx.Invoke(autoMigrate))
+var databaseModule = fx.Module("databaseModule", fx.Provide(newDatabaseModule), fx.Invoke(autoMigrate, queryHistory))
 
 func newDatabaseModule() *gorm.DB {
 	cache, err := os.UserCacheDir()
@@ -30,4 +30,9 @@ func newDatabaseModule() *gorm.DB {
 
 func autoMigrate(db *gorm.DB) {
 	lo.Must0(db.AutoMigrate(model.Connection{}))
+}
+
+func queryHistory(db *gorm.DB) {
+	var connections []model.Connection
+	db.Find(&model.Connection{}, &connections)
 }

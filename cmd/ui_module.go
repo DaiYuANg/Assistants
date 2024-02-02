@@ -2,19 +2,28 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"fyne.io/fyne/v2"
 	fyneApp "fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/dialog"
 	"go.uber.org/fx"
 	"protocol/assistant/internal/ui"
 )
 
-var uiModule = fx.Module("ui", fx.Provide(
-	newUIApp,
-	newUIWindow,
-	fx.Annotate(ui.NewToolBar, fx.ResultTags(`name:"toolBar"`)),
-	fx.Annotate(ui.NewLayout, fx.ResultTags(`name:"layout"`)),
-	fx.Annotate(ui.NewStatusBar, fx.ResultTags(`name:"statusBar"`)),
-), fx.Invoke(setupWindow, showUI, windowShutdownHook))
+var uiModule = fx.Module("ui",
+	fx.Provide(
+		newUIApp,
+		newUIWindow,
+		newUIChan,
+		ui.NewContentTab,
+		fx.Annotate(ui.NewMessageContent, fx.ResultTags(`name:"messageContent"`)),
+		fx.Annotate(ui.NewToolBar, fx.ResultTags(`name:"toolBar"`)),
+		fx.Annotate(ui.NewLayout, fx.ResultTags(`name:"layout"`)),
+		fx.Annotate(ui.NewStatusBar, fx.ResultTags(`name:"statusBar"`)),
+		fx.Annotate(ui.NewConnectionTree, fx.ResultTags(`name:"connectionTree"`)),
+	),
+	fx.Invoke(setupWindow, showUI, windowShutdownHook),
+)
 
 type UIAppResult struct {
 	fx.Out
@@ -35,6 +44,15 @@ func newUIWindow(app fyne.App) fyne.Window {
 	window := app.NewWindow("Proto")
 	window.Resize(fyne.NewSize(600, 800))
 	window.CenterOnScreen()
+	window.SetCloseIntercept(func() {
+		fmt.Println("close")
+		quitConfirm := dialog.NewConfirm("Quit", "Realy", func(b bool) {
+			if b {
+				window.Close()
+			}
+		}, window)
+		quitConfirm.Show()
+	})
 	return window
 }
 
@@ -56,6 +74,10 @@ func showUI(lc fx.Lifecycle, window fyne.Window) {
 			return nil
 		}},
 	)
+}
+
+func newUIChan() chan struct{} {
+	return make(chan struct{})
 }
 
 type WindowShutdownHookParam struct {

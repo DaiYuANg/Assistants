@@ -9,6 +9,7 @@ import (
 
 var app = fx.New(
 	fx.Provide(zap.NewExample),
+	schedulerModule,
 	databaseModule,
 	contextModule,
 	errorModule,

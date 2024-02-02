@@ -1,14 +1,11 @@
 package ui
 
 import (
-	"fmt"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
-	xwidget "fyne.io/x/fyne/widget"
 	"go.uber.org/fx"
-	"log"
 	"protocol/assistant/internal/protocol"
 )
 
@@ -34,9 +31,10 @@ func onTap() {
 
 type LayoutParam struct {
 	fx.In
-	Window    fyne.Window
-	Toolbar   *widget.Toolbar `name:"toolBar"`
-	StatusBar *fyne.Container `name:"statusBar"`
+	Window         fyne.Window
+	Toolbar        *widget.Toolbar `name:"toolBar"`
+	StatusBar      *fyne.Container `name:"statusBar"`
+	ConnectionTree *widget.Tree    `name:"connectionTree"`
 }
 
 func NewLayout(param LayoutParam) *fyne.Container {
@@ -59,27 +57,28 @@ func NewLayout(param LayoutParam) *fyne.Container {
 			nil,
 			// center
 			container.NewHSplit(
-				container.NewVBox(
-					widget.NewLabel("ip address"),
-					xwidget.NewCompletionEntry([]string{}),
-					widget.NewSeparator(),
-					widget.NewLabel("protocol"),
-					widget.NewSelect(options, func(selected string) {
-						NewCreateConnectionDialog(param.Window)
-						fmt.Println(selected)
-					}),
-					widget.NewSeparator(),
-					button,
-					widget.NewLabel("Bottom"),
-					&widget.Form{
-						Items: []*widget.FormItem{
-							{Text: "Entry", Widget: widget.NewEntry()}},
-						OnSubmit: func() {
-							log.Println("Form submitted:", widget.NewEntry().Text)
-							log.Println("multiline:", widget.NewMultiLineEntry().Text)
-						},
-					},
-				),
+				//container.NewVBox(
+				//	widget.NewLabel("ip address"),
+				//	xwidget.NewCompletionEntry([]string{}),
+				//	widget.NewSeparator(),
+				//	widget.NewLabel("protocol"),
+				//	widget.NewSelect(options, func(selected string) {
+				//		NewCreateConnectionDialog(param.Window)
+				//		fmt.Println(selected)
+				//	}),
+				//	widget.NewSeparator(),
+				//	button,
+				//	widget.NewLabel("Bottom"),
+				//	&widget.Form{
+				//		Items: []*widget.FormItem{
+				//			{Text: "Entry", Widget: widget.NewEntry()}},
+				//		OnSubmit: func() {
+				//			log.Println("Form submitted:", widget.NewEntry().Text)
+				//			log.Println("multiline:", widget.NewMultiLineEntry().Text)
+				//		},
+				//	},
+				//),
+				param.ConnectionTree,
 				container.NewVBox(
 					container.NewAppTabs(
 						container.NewTabItem("Tab 1", container.NewVBox(
