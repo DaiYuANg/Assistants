@@ -7,5 +7,8 @@ import (
 
 type Connection struct {
 	gorm.Model
-	Protocol protocol.Protocol
+	ConnectionName string            `gorm:"index:idx_name,unique"`
+	Protocol       protocol.Protocol `gorm:"index"`
+	Address        string            `gorm:"index"`
+	Port           int               `gorm:"index"`
 }

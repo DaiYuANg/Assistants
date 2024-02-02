@@ -13,7 +13,7 @@ tasks:
 
   build:
     cmds:
-      -  fyne package -os windows
+      - go run fyne.io/fyne/v2/cmd/fyne package
 
   dev:
     cmd: go run github.com/cosmtrek/air

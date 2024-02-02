@@ -1,4 +1,4 @@
-package ui
+package gui
 
 import (
 	"fyne.io/fyne/v2"
@@ -7,11 +7,11 @@ import (
 	"go.uber.org/fx"
 )
 
-type MessageContainerParam struct {
+type MessageContainerDependency struct {
 	fx.In
 }
 
-func NewMessageContainer(param MessageContainerParam) *fyne.Container {
+func NewMessageContainer(dependency MessageContainerDependency) *fyne.Container {
 	messageContainer := container.NewVBox(
 		container.NewAppTabs(
 			container.NewTabItem("Tab 1", container.NewVBox(

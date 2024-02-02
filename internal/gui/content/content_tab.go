@@ -1,15 +1,17 @@
-package ui
+package content
 
 import (
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
+	"protocol/assistant/internal/gui"
 )
 
 func NewContentTab() *container.AppTabs {
 	var tab = container.NewAppTabs(
-		container.NewTabItem("Tab 1", container.NewVBox(
+		container.NewTabItemWithIcon("Tab 1", theme.CancelIcon(), container.NewVBox(
 			widget.NewLabel("Center 1"),
-			NewMessageContent(),
+			gui.NewMessageContent(),
 		)),
 		container.NewTabItem("Tab 2", widget.NewLabel("World!")),
 	)

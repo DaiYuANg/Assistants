@@ -6,12 +6,24 @@ type (
 )
 
 const (
-	TCP_SERVER Protocol = "TCP_SERVER"
-	UDP_SERVER Protocol = "UDP_SERVER"
-	BASE2               = 2
-	BASE8               = 8
-	BASE10              = 10
-	BASE16              = 16
+	TcpServer Protocol = "TCP_SERVER"
+	UdpServer Protocol = "UDP_SERVER"
+	TcpClient Protocol = "TCP_CLIENT"
+	UdpClient Protocol = "UDP_CLIENT"
+	BASE2              = 2
+	BASE8              = 8
+	BASE10             = 10
+	BASE16             = 16
+	SIZE               = 5
+)
+
+var (
+	AvailableProtocols = []string{
+		string(TcpServer),
+		string(UdpServer),
+		string(TcpClient),
+		string(UdpClient),
+	}
 )
 
 type CreateConnectionOption struct {
