@@ -4,8 +4,6 @@ use (
 	.
 	./apps/converter
 	./apps/protocol
-	./apps/cd
-	./apps/searcher
 	./component
 	./fx_module
 	./pkg

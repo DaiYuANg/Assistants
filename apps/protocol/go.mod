@@ -72,3 +72,8 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	honnef.co/go/js/dom v0.0.0-20210725211120-f030747120f2 // indirect
 )
+
+replace (
+	github.com/go-text/render => github.com/go-text/render v0.0.0-20230619120952-35bccb6164b8
+	github.com/go-text/typesetting => github.com/go-text/typesetting v0.0.0-20230616162802-9c17dd34aa4a
+)

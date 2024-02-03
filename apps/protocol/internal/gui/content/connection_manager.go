@@ -6,7 +6,6 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/storage"
-	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 	widgetx "fyne.io/x/fyne/widget"
 )
@@ -33,13 +32,10 @@ func NewConnectionManager() *fyne.Container {
 		tree,
 	)
 	scroll.SetMinSize(fyne.NewSize(30, 600))
+
 	manager := container.New(
 		vlayout,
-		widget.NewToolbar(
-			widget.NewToolbarAction(theme.FileIcon(), func() {
-
-			}),
-		),
+		widget.NewEntry(),
 		scroll,
 	)
 	return manager
