@@ -15,6 +15,5 @@ func NewContentTab() *container.AppTabs {
 		)),
 		container.NewTabItem("Tab 2", widget.NewLabel("World!")),
 	)
-
 	return tab
 }

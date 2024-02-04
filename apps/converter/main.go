@@ -1,9 +1,11 @@
 package main
 
 import (
+	"fmt"
 	"fyne.io/fyne/v2"
 	fyneApp "fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 	_ "github.com/u2takey/ffmpeg-go"
 )
@@ -12,7 +14,11 @@ func main() {
 	app := fyneApp.NewWithID("converter")
 	window := app.NewWindow("co")
 	window.SetContent(container.NewCenter(
-		widget.NewEntry(),
+		widget.NewButton("Choose File", func() {
+			dialog.NewFileOpen(func(closer fyne.URIReadCloser, err error) {
+				fmt.Println(closer)
+			}, window).Show()
+		}),
 	))
 	window.CenterOnScreen()
 	window.Resize(fyne.NewSize(300, 300))

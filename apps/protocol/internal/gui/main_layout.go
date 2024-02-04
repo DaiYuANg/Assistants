@@ -37,6 +37,7 @@ func NewMessageContent() *fyne.Container {
 	scroll := container.NewScroll(
 		text,
 	)
+	scroll.Resize(fyne.NewSize(50, 600))
 	scroll.Resize(fyne.NewSize(500, 500))
 	return container.NewVBox(
 		scroll,
