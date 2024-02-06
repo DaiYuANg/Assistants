@@ -88,8 +88,10 @@ func NewAdvanceOption() *widget.Accordion {
 
 func newButtons(
 	onCancel func(),
+	onSave func(result ConnectionDialogResult),
 ) *fyne.Container {
 	var confirm = widget.NewButtonWithIcon("OK", theme.ConfirmIcon(), func() {
+		onSave(ConnectionDialogResult{})
 	})
 	confirm.Importance = widget.HighImportance
 	buttons := container.NewGridWithColumns(
@@ -98,27 +100,20 @@ func newButtons(
 			onCancel()
 		}),
 		confirm)
-	//buttons := container.New(layout.NewHBoxLayout(),
-	//	layout.NewSpacer(),
-	//	layout.NewSpacer(),
-	//	layout.NewSpacer(),
-	//	layout.NewSpacer(),
-	//)
-
 	return buttons
 }
 
 func NewCreateConnectionForm(parameter ConnectionFormParameter) (*fyne.Container, *ConnectionForm, ConnectionDialogResult) {
 	var requireForm, result, form = requiresForm()
 	var testConnectionBtn = widget.NewButtonWithIcon("TestConnection", theme.InfoIcon(), func() {
-
+		parameter.OnSave(result)
 	})
 	testConnectionBtn.Importance = widget.WarningImportance
 	c := container.NewVBox(
 		requireForm,
 		NewAdvanceOption(),
 		testConnectionBtn,
-		newButtons(parameter.OnCancel),
+		newButtons(parameter.OnCancel, parameter.OnSave),
 	)
 	return c, form, result
 }

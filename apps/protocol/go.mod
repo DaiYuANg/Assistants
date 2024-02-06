@@ -8,7 +8,8 @@ require (
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-co-op/gocron/v2 v2.2.3
 	github.com/go-faker/faker/v4 v4.2.0
-	github.com/kataras/go-events v0.0.3
+	github.com/google/uuid v1.6.0
+	github.com/gookit/event v1.1.2
 	github.com/samber/lo v1.39.0
 	github.com/spf13/cobra v1.8.0
 	github.com/spf13/viper v1.18.2
@@ -31,7 +32,6 @@ require (
 	github.com/go-text/typesetting v0.0.0-20230616162802-9c17dd34aa4a // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect
 	github.com/hashicorp/hcl v1.0.1-vault-5 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

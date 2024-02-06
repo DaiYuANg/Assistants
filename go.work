@@ -5,6 +5,6 @@ use (
 	./apps/converter
 	./apps/protocol
 	./component
-	./fx_module
+	./eventbus
 	./pkg
 )

@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"fx_module"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )
@@ -11,8 +10,7 @@ var app = fx.New(
 	fx.Provide(zap.NewExample),
 	commandModule,
 	infoModule,
-	fx_module.GlobalEventModule,
-	eventModule,
+	protocolModule,
 	configModule,
 	schedulerModule,
 	databaseModule,
