@@ -11,9 +11,9 @@ func NewCommand() cobra.Command {
 	var cmd = cobra.Command{Use: "Protocol",
 		SilenceErrors: true,
 		SilenceUsage:  true,
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			//return app.Start(context.Background())
-			return nil
+			cmd.HelpFunc()
 		},
 	}
 	return cmd

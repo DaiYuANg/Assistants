@@ -12,3 +12,13 @@ type Connection struct {
 	Address        string            `gorm:"index"`
 	Port           int               `gorm:"index"`
 }
+
+type Test struct {
+	gorm.Model
+}
+
+type ConnectionGroup struct {
+	gorm.Model
+	ConnectionId uint
+	GroupName    string
+}

@@ -28,20 +28,18 @@ func newDatabaseModule() *gorm.DB {
 	return db
 }
 
-var tables = []interface{}{model.Connection{}}
+var tables = []interface{}{model.Connection{}, model.ConnectionGroup{}}
 
 func autoMigrate(db *gorm.DB) {
-	go func() {
-		migrator := db.Migrator()
-		var notExistsTable []interface{}
-		for _, table := range tables {
-			if migrator.HasTable(table) {
-				continue
-			}
-			notExistsTable = append(notExistsTable, table)
+	migrator := db.Migrator()
+	var notExistsTable []interface{}
+	for _, table := range tables {
+		if migrator.HasTable(table) {
+			continue
 		}
-		lo.Must0(db.AutoMigrate(notExistsTable...))
-	}()
+		notExistsTable = append(notExistsTable, table)
+	}
+	lo.Must0(db.AutoMigrate(notExistsTable...))
 }
 
 func queryHistory(db *gorm.DB) {

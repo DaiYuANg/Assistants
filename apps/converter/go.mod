@@ -5,7 +5,6 @@ go 1.21
 require (
 	fyne.io/fyne/v2 v2.4.3
 	github.com/u2takey/ffmpeg-go v0.5.0
-	github.com/wader/goutubedl v0.0.0-20240113171134-01bac34c4c02
 )
 
 require (
