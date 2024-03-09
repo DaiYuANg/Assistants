@@ -10,16 +10,3 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
-
-  build:
-    cmds:
-      - go run fyne.io/fyne/v2/cmd/fyne package
-
-  dev:
-    cmd: go run github.com/cosmtrek/air
-
-  fmt:
-    cmd: go fmt ./...
-
-  clean:
-    rm -rf output
