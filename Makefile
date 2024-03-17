@@ -1,0 +1,2 @@
+init:
+	rye sync

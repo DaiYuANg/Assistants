@@ -51,6 +51,7 @@ packaging==24.0
 pathspec==0.12.1
     # via black
     # via mkdocs
+peewee==3.17.1
 platformdirs==4.2.0
     # via black
     # via mkdocs
