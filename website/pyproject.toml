@@ -1,0 +1,17 @@
+[project]
+name = "website"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "DaiYuANg", email = "138393979+DaiYuANg@users.noreply.github.com" }
+]
+dependencies = [
+    "mkdocs>=1.5.3",
+]
+readme = "README.md"
+requires-python = ">= 3.12"
+
+[tool.rye]
+managed = true
+virtual = true
+dev-dependencies = []
