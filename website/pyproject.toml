@@ -6,7 +6,6 @@ authors = [
     { name = "DaiYuANg", email = "138393979+DaiYuANg@users.noreply.github.com" }
 ]
 dependencies = [
-    "mkdocs>=1.5.3",
 ]
 readme = "README.md"
 requires-python = ">= 3.12"
@@ -14,4 +13,6 @@ requires-python = ">= 3.12"
 [tool.rye]
 managed = true
 virtual = true
-dev-dependencies = []
+dev-dependencies = [
+    "mkdocs>=1.5.3",
+]

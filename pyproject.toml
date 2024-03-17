@@ -15,7 +15,10 @@ build-backend = "hatchling.build"
 
 [tool.rye]
 managed = true
-dev-dependencies = []
+dev-dependencies = [
+    "black>=24.3.0",
+    "pre-commit>=3.6.2",
+]
 virtual = true
 
 [tool.hatch.metadata]
