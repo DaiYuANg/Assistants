@@ -28,4 +28,4 @@ allow-direct-references = true
 packages = ["src/assistants"]
 
 [tool.rye.workspace]
-members = ["website", "packages/protocol"]
+members = ["website", "packages/protocol","packages/qchat"]
