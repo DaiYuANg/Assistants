@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "netassistants"
+version = "0.1.0"
+description = ""
+authors = ["DaiYuANg"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.14"
+pyside6 = "^6.8.1"
+dependency-injector = "^4.44.0"
+python-dotenv = "^1.0.1"
+pony = "^0.7.19"
+loguru = "^0.7.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+pyinstaller = "^6.11.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
