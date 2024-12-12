@@ -1,5 +1,7 @@
+import asyncio
 import socket
 
+from PySide6.QtCore import QThread, Signal
 from loguru import logger
 
 
@@ -32,3 +34,16 @@ async def tcp_client(host: str, port: int):
         # 关闭连接
         client_socket.close()
         print("Connection closed.")
+
+# QThread 来后台运行 tcp_client
+class TcpClientWorker(QThread):
+    status_signal = Signal(str)
+
+    def __init__(self, host: str, port: int):
+        super().__init__()
+        self.host = host
+        self.port = port
+
+    def run(self):
+        asyncio.run(tcp_client(self.host, self.port))
+        self.status_signal.emit(f"Connection to {self.host}:{self.port} closed.")

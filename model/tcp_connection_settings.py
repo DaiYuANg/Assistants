@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class TcpConnectionSettings:
     def __init__(self, host, port, protocol, timeout, encryption_enabled):
         self.host = host

@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import (
-    QMainWindow,
     QTabWidget,
     QWidget,
     QVBoxLayout,
@@ -7,11 +6,9 @@ from PySide6.QtWidgets import (
     QPushButton,
 )
 
-
 class MessagePane(QTabWidget):
     def __init__(self):
         super().__init__()
-
         # 创建 TabWidget
         # 创建标签页 1
         tab1 = QWidget()

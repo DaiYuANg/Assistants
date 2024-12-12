@@ -10,8 +10,8 @@ python = ">=3.9,<3.14"
 pyside6 = "^6.8.1"
 dependency-injector = "^4.44.0"
 python-dotenv = "^1.0.1"
-pony = "^0.7.19"
 loguru = "^0.7.3"
+sqlalchemy = "^2.0.36"
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.10.0"
